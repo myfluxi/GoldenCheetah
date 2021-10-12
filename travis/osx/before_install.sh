@@ -45,15 +45,17 @@ cd ..
 
 # D2XX - refresh cache if folder is empty
 if [ -z "$(ls -A D2XX)" ]; then
+    mkdir D2XX
     curl -O https://www.ftdichip.com/Drivers/D2XX/MacOSX/D2XX1.2.2.dmg
     hdiutil mount D2XX1.2.2.dmg
     cp /Volumes/release/D2XX/Object/10.5-10.7/x86_64/libftd2xx.1.2.2.dylib D2XX
-    cp /Volumes/release/D2XX/bin/*.h D2XX
+    find /Volumes/release/D2XX/bin -name "*.h" -exec cp '{}' D2XX \;
 fi
 sudo cp D2XX/libftd2xx.1.2.2.dylib /usr/local/lib
 
 # VLC
 if [[ -z "$(ls -A VLC)" ]]; then
+    mkdir VLC
     curl -O http://download.videolan.org/pub/videolan/vlc/3.0.8/macosx/vlc-3.0.8.dmg
     hdiutil mount vlc-3.0.8.dmg
     cp -R "/Volumes/VLC media player/VLC.app/Contents/MacOS/include" VLC/include
